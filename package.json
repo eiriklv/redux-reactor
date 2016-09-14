@@ -1,6 +1,6 @@
 {
   "name": "redux-reactor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Redux middleware for handling side-effects by reacting to dispatched actions",
   "main": "dist/index.js",
   "files": [
