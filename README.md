@@ -5,7 +5,7 @@ NOTE: This is still work in progress..
 
 Side-effect [middleware](http://redux.js.org/docs/advanced/Middleware.html) for Redux.
 
-[![build status](https://img.shields.io/travis/eiriklv/redux-reactor/master.svg?style=flat-square)](https://travis-ci.org/gaearon/redux-thunk)
+[![build status](https://img.shields.io/travis/eiriklv/redux-reactor/master.svg?style=flat-square)](https://travis-ci.org/eiriklv/redux-reactor)
 [![npm version](https://img.shields.io/npm/v/redux-reactor.svg?style=flat-square)](https://www.npmjs.com/package/redux-reactor)
 
 ```js
