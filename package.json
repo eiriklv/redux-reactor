@@ -1,0 +1,48 @@
+{
+  "name": "redux-reactor",
+  "version": "0.1.0",
+  "description": "Redux middleware for handling side-effects by reacting to dispatched actions",
+  "main": "dist/index.js",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf lib dist es",
+    "prepublish": "npm run clean && npm run test && npm run build",
+    "pretest": "npm run lint",
+    "lint": "eslint src",
+    "test": "mocha --compilers js:babel-core/register --reporter spec test/*.js",
+    "build": "babel src --out-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eiriklv/redux-reactor.git"
+  },
+  "homepage": "https://github.com/eiriklv/redux-reactor",
+  "keywords": [
+    "redux",
+    "side-effects",
+    "middleware",
+    "redux-middleware"
+  ],
+  "author": "Eirik Vullum <eirik@evconsult.no>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.6.5",
+    "babel-eslint": "^5.0.0-beta4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.2.0",
+    "cross-env": "^1.0.7",
+    "eslint": "^1.10.2",
+    "eslint-config-airbnb": "1.0.2",
+    "eslint-plugin-react": "^4.1.0",
+    "mocha": "^2.2.5",
+    "redux": "^3.4.0",
+    "rimraf": "^2.5.2",
+    "webpack": "^1.12.14"
+  }
+}
