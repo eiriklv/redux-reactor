@@ -9,6 +9,28 @@ function reactorMiddleware(reactors, extraArguments) {
   const everyDispatchTakers = [];
 
   /**
+   * Create a function that enables reactors to wait
+   * for actions to be dispatched (single occurence)
+   */
+  const takeDispatchOf = (actionType) => {
+    /**
+     * Return a promise that will be resolved when
+     * a specified action is dispatched
+     */
+    return new Promise((resolve) => {
+      singleDispatchTakers.push({ actionType, resolve });
+    });
+  };
+
+  /**
+   * Create e function that enables reactors to wait
+   * for actions to be dispatched (every occurence)
+   */
+  const takeEveryDispatchOf = (actionType, handler) => {
+    everyDispatchTakers.push({ actionType, handler });
+  };
+
+  /**
    * Return middleware
    */
   return (store) => {
@@ -22,28 +44,6 @@ function reactorMiddleware(reactors, extraArguments) {
        */
       setImmediate(() => {
         reactors.forEach(reactor => {
-          /**
-           * Create a function that enables reactors to wait
-           * for actions to be dispatched (single occurence)
-           */
-          const takeDispatchOf = (actionType) => {
-            /**
-             * Return a promise that will be resolved when
-             * a specified action is dispatched
-             */
-            return new Promise((resolve) => {
-              singleDispatchTakers.push({ actionType, resolve });
-            });
-          };
-
-          /**
-           * Create e function that enables reactors to wait
-           * for actions to be dispatched (every occurence)
-           */
-          const takeEveryDispatchOf = (actionType, handler) => {
-            everyDispatchTakers.push({ actionType, handler });
-          };
-
           /**
            * Run/initialize the reactor
            *
