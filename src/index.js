@@ -2,14 +2,17 @@
  * Create a middleware for adding reactors
  */
 function reactorMiddleware(reactors, extraArguments) {
+  /**
+   * Create an array to hold listeners/subscribers/waiters for action dispatches
+   */
+  const singleDispatchTakers = [];
+  const everyDispatchTakers = [];
+
+  /**
+   * Return store enhancer
+   */
   return (store) => {
     return (next) => {
-      /**
-       * Create an array to hold listeners/subscribers/waiters for action dispatches
-       */
-      const singleDispatchTakers = [];
-      const everyDispatchTakers = [];
-
       /**
        * Initialize the reactors
        *
@@ -18,71 +21,34 @@ function reactorMiddleware(reactors, extraArguments) {
        * middleware to be applied to store (or else we cannot dispatch actions through the entire chain again)
        */
       setImmediate(() => {
-        reactors.forEach(epic => {
+        reactors.forEach(reactor => {
           /**
            * Create a function that enables reactors to wait
            * for actions to be dispatched (single occurence)
            */
           const takeDispatchOf = (actionType) => {
             /**
-             * Create an initial resolver function
-             */
-            let resolver = () => console.warn('resolver not ready');
-
-            /**
-             * Create a promise that will be resolved when
+             * Return a promise that will be resolved when
              * a specified action is dispatched
              */
-            const promise = new Promise((resolve) => {
-              /**
-               * Replace the resolver function
-               * with the actual resolver function
-               * of the generated promise
-               */
-              resolver = resolve;
+            return new Promise((resolve) => {
+              singleDispatchTakers.push({ actionType, resolve });
             });
-
-            /**
-             * Create an object representing the
-             * unresolved awaited action dispatch
-             */
-            const taker = { actionType, resolver };
-
-            /**
-             * Push the representation into
-             * a list of all awaited action dispatches
-             */
-            singleDispatchTakers.push(taker);
-
-            /**
-             * Return a promise of an awaited action dispatch
-             */
-            return promise;
           };
 
           /**
            * Create e function that enables reactors to wait
            * for actions to be dispatched (every occurence)
            */
-          const takeEveryDispatchOf = (actionType, actor) => {
-            /**
-             * Create an object representing the
-             * unresolved awaited action dispatch
-             */
-            const taker = { actionType, actor };
-
-            /**
-             * Push the representation into
-             * a list of all awaited action dispatches
-             */
-            everyDispatchTakers.push(taker);
+          const takeEveryDispatchOf = (actionType, handler) => {
+            everyDispatchTakers.push({ actionType, handler });
           };
 
           /**
-           * Run/initialize the epic/reactor/actor (whatever it ends up being called)
+           * Run/initialize the reactor
            *
            * Make sure to pass down the functions that enables
-           * the epic to wait for a dispatched action or emitted event
+           * the reactor to wait for a dispatched action or emitted event
            *
            * We also pass down the store, so that the reactors can
            * read the current state and dispatch actions if necessary
@@ -91,16 +57,16 @@ function reactorMiddleware(reactors, extraArguments) {
            * which could be sockets, emitters or other necessary
            * arguments to get the functionality you need
            */
-          epic({ takeDispatchOf, takeEveryDispatchOf }, store, extraArguments);
+          reactor({ takeDispatchOf, takeEveryDispatchOf }, store, extraArguments);
         });
       });
 
       /**
-       * Patch store.dispatch to add the epic functionality
+       * Patch store.dispatch to add the reactor functionality
        */
       return (action) => {
         /**
-         * Resolve any applicable epic singleDispatchTakers
+         * Resolve any applicable reactor singleDispatchTakers
          */
         singleDispatchTakers
         .filter(({ actionType }) => (
@@ -117,7 +83,7 @@ function reactorMiddleware(reactors, extraArguments) {
            * Resolve the taker in the next tick
            */
           setImmediate(() => {
-            taker.resolver(action);
+            taker.resolve(action);
           });
         });
 
@@ -130,13 +96,13 @@ function reactorMiddleware(reactors, extraArguments) {
           !actionType ||
           (action.type && action.type === actionType)
         ))
-        .forEach(({ actor }) => {
+        .forEach(({ handler }) => {
           /**
-           * Run the actor function of the taker
+           * Run the handler function of the taker
            * on the next tick
            */
           setImmediate(() => {
-            actor(action);
+            handler(action);
           });
         });
 
