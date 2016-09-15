@@ -9,7 +9,7 @@ function reactorMiddleware(reactors, extraArguments) {
   const everyDispatchTakers = [];
 
   /**
-   * Return store enhancer
+   * Return middleware
    */
   return (store) => {
     return (next) => {
