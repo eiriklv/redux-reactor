@@ -97,10 +97,10 @@ module.exports = async (
     // Do something based on step 1..
 
     const action2 = takeDispatchOf('STEP_2');
-    // Do something based on step 1..
+    // Do something based on step 2..
 
     const action3 = takeDispatchOf('STEP_3');
-    // Do something based on step 1..
+    // Do something based on step 3..
 
     console.log('Done with all steps!');
   }
@@ -119,10 +119,10 @@ module.exports = async (
   // Do something based on step 1..
 
   const action2 = takeDispatchOf('STEP_2');
-  // Do something based on step 1..
+  // Do something based on step 2..
 
   const action3 = takeDispatchOf('STEP_3');
-  // Do something based on step 1..
+  // Do something based on step 3..
 
   console.log('Done with all steps!');
 }
