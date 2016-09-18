@@ -38,10 +38,85 @@ Redux Reactor allows you wait for actions to be dispatched and react to them (in
 
 ## Examples
 
-Examples 1:
+Example Async Reactor 1:
 
 ```js
-// ... Examples coming
+module.exports = async (
+  { takeDispatchOf, takeEveryDispatchOf },
+  { dispatch, getState, }
+  extraArguments
+) {
+  takeEveryDispatchOf(undefined, async (action) => {
+    switch (action.type) {
+      case 'SOME_ACTION':
+        //.. Do something (side-effect)
+        //.. Maybe dispatch another action?
+        break;
+      default:
+        console.log('Doing nothing..');
+    }
+  })
+}
+```
+
+Example Async Reactor 2:
+
+```js
+module.exports = async (
+  { takeDispatchOf, takeEveryDispatchOf },
+  { dispatch, getState, }
+  extraArguments
+) {
+  while (true) {
+    const action = takeDispatchOf('SOME_ASYNC_ACTION');
+
+    // Do something based on the async action..
+  }
+}
+```
+
+Example Async Reactor 2 (multiple times):
+
+```js
+module.exports = async (
+  { takeDispatchOf, takeEveryDispatchOf },
+  { dispatch, getState, }
+  extraArguments
+) {
+  while (true) {
+    const action1 = takeDispatchOf('STEP_1');
+    // Do something based on step 1..
+
+    const action2 = takeDispatchOf('STEP_2');
+    // Do something based on step 1..
+
+    const actio3 = takeDispatchOf('STEP_3');
+    // Do something based on step 1..
+
+    console.log('Done with all steps!');
+  }
+}
+```
+
+Example Async Reactor 2 (single time):
+
+```js
+module.exports = async (
+  { takeDispatchOf, takeEveryDispatchOf },
+  { dispatch, getState, }
+  extraArguments
+) {
+  const action1 = takeDispatchOf('STEP_1');
+  // Do something based on step 1..
+
+  const action2 = takeDispatchOf('STEP_2');
+  // Do something based on step 1..
+
+  const actio3 = takeDispatchOf('STEP_3');
+  // Do something based on step 1..
+
+  console.log('Done with all steps!');
+}
 ```
 
 ## Installation
