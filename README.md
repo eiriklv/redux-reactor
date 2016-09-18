@@ -36,7 +36,7 @@ Reactors can be used to orchestrate asynchronous flows in your redux application
 
 Redux Reactor allows you wait for actions to be dispatched and react to them (in whatever way you like) and if applicable, dispatch new actions. The tools you are given are `takeDispatchOf` and `takeEveryDispatchOf` that you are expected to use together with `async / await` from ESNext.
 
-## Examples
+## Usage and examples
 
 ```
 // returns a promise of a dispatched action
