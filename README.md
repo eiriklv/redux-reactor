@@ -38,7 +38,7 @@ Redux Reactor allows you wait for actions to be dispatched and react to them (in
 
 ## Examples
 
-Example Async Reactor 1:
+Example Async Reactor 1 (continuous):
 
 ```js
 module.exports = async (
@@ -59,7 +59,7 @@ module.exports = async (
 }
 ```
 
-Example Async Reactor 2:
+Example Async Reactor 2 (multiple times):
 
 ```js
 module.exports = async (
@@ -69,7 +69,6 @@ module.exports = async (
 ) {
   while (true) {
     const action = takeDispatchOf('SOME_ASYNC_ACTION');
-
     // Do something based on the async action..
   }
 }
@@ -90,7 +89,7 @@ module.exports = async (
     const action2 = takeDispatchOf('STEP_2');
     // Do something based on step 1..
 
-    const actio3 = takeDispatchOf('STEP_3');
+    const action3 = takeDispatchOf('STEP_3');
     // Do something based on step 1..
 
     console.log('Done with all steps!');
@@ -112,14 +111,14 @@ module.exports = async (
   const action2 = takeDispatchOf('STEP_2');
   // Do something based on step 1..
 
-  const actio3 = takeDispatchOf('STEP_3');
+  const action3 = takeDispatchOf('STEP_3');
   // Do something based on step 1..
 
   console.log('Done with all steps!');
 }
 ```
 
-## Installation
+## Installation and usage
 
 ```
 npm install --save redux-reactor
