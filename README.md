@@ -38,12 +38,22 @@ Redux Reactor allows you wait for actions to be dispatched and react to them (in
 
 ## Examples
 
-Example Async Reactor 1 (continuous):
+```
+// returns a promise of a dispatched action
+takeDispatchOf(actionType || undefined)
+```
+
+```
+// runs a handler (async function) every time an action is dispatched
+takeEveryDispatchOf(actionType || undefined, handler)
+```
+
+Example Async Reactor 1 (continuous - acts on every action):
 
 ```js
 module.exports = async (
   { takeDispatchOf, takeEveryDispatchOf },
-  { dispatch, getState, }
+  { dispatch, getState }
   extraArguments
 ) {
   takeEveryDispatchOf(undefined, async (action) => {
@@ -59,12 +69,12 @@ module.exports = async (
 }
 ```
 
-Example Async Reactor 2 (multiple times):
+Example Async Reactor 2 (multiple times - but only acts on one action at the time):
 
 ```js
 module.exports = async (
   { takeDispatchOf, takeEveryDispatchOf },
-  { dispatch, getState, }
+  { dispatch, getState }
   extraArguments
 ) {
   while (true) {
@@ -74,12 +84,12 @@ module.exports = async (
 }
 ```
 
-Example Async Reactor 2 (multiple times):
+Example Async Reactor 2 (multiple times - only completes one flow at the time):
 
 ```js
 module.exports = async (
   { takeDispatchOf, takeEveryDispatchOf },
-  { dispatch, getState, }
+  { dispatch, getState }
   extraArguments
 ) {
   while (true) {
@@ -97,12 +107,12 @@ module.exports = async (
 }
 ```
 
-Example Async Reactor 2 (single time):
+Example Async Reactor 2 (single time - only completes one flow ever):
 
 ```js
 module.exports = async (
   { takeDispatchOf, takeEveryDispatchOf },
-  { dispatch, getState, }
+  { dispatch, getState }
   extraArguments
 ) {
   const action1 = takeDispatchOf('STEP_1');
@@ -118,7 +128,7 @@ module.exports = async (
 }
 ```
 
-## Installation and usage
+## Installation
 
 ```
 npm install --save redux-reactor
