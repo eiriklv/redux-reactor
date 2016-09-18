@@ -38,12 +38,12 @@ Redux Reactor allows you wait for actions to be dispatched and react to them (in
 
 ## Usage and examples
 
-```
+```js
 // returns a promise of a dispatched action
 takeDispatchOf(actionType || undefined)
 ```
 
-```
+```js
 // runs a handler (async function) every time an action is dispatched
 takeEveryDispatchOf(actionType || undefined, handler)
 ```
