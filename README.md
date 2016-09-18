@@ -84,7 +84,7 @@ module.exports = async (
 }
 ```
 
-Example Async Reactor 2 (multiple times - only completes one flow at the time):
+Example Async Reactor 3 (multiple times - only completes one flow at the time):
 
 ```js
 module.exports = async (
@@ -107,7 +107,7 @@ module.exports = async (
 }
 ```
 
-Example Async Reactor 2 (single time - only completes one flow ever):
+Example Async Reactor 4 (single time - only completes one flow ever):
 
 ```js
 module.exports = async (
